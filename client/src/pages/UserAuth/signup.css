@@ -1,0 +1,96 @@
+/* Form Container */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  padding-top: 80px;  /* Reduced the padding-top */
+  background: linear-gradient(45deg, #6ee7b7, #3b82f6, #9333ea);
+}
+
+/* Form Box Styling */
+.form-box {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  padding: 25px;  /* Reduced padding to reduce the overall size */
+  width: 100%;
+  max-width: 400px;  /* Reduced width to make it more compact */
+  transition: transform 0.3s ease;
+
+}
+
+/* Form Title */
+.form-title {
+  font-size: 24px;  /* Reduced font size for title */
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 15px;  /* Reduced margin bottom */
+}
+
+/* Form Inputs */
+.form-group {
+  margin-bottom: 15px;  /* Reduced margin bottom */
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;  /* Reduced padding for input fields */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;  /* Slightly reduced font size */
+  transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: #2575fc;
+  outline: none;
+  box-shadow: 0 0 8px rgba(37, 117, 252, 0.3);
+}
+
+/* Form Button */
+.form-button {
+  background: #2575fc;
+  color: #fff;
+  font-size: 16px;  /* Reduced font size */
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.form-button:hover {
+  background: #1a5dc9;
+  transform: scale(1.05);
+}
+
+/* Footer Link Styling */
+.form-footer {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;  /* Reduced top margin */
+}
+
+.form-footer .form-link {
+  color: #2575fc;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.form-footer .form-link:hover {
+  color: #1a5dc9;
+}

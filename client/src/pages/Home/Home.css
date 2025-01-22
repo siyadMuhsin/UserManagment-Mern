@@ -1,0 +1,15 @@
+/* Custom CSS for the background */
+.bg-gradient-to-r {
+  background: linear-gradient(45deg, #6ee7b7, #3b82f6, #9333ea);
+}
+
+/* For the button hover effects */
+button:hover, .hover\:bg-blue-600:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+/* Adding some shadow effect to the home container */
+.bg-white {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
