@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import "./signup.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import validation from "../../validation";
 import API from "../../axiosConfig";
@@ -11,9 +11,12 @@ import Navbar from "../../componets/Navbar/Navbar";
 const SignupForm = () => {
   const isAtuhenticated = useSelector((state) => state.auth.isAuthenticated);
   const navigate = useNavigate();
-  if(isAtuhenticated){
-    navigate('/')
-  }
+  useEffect(()=>{
+    if(isAtuhenticated){
+      navigate('/')
+    }
+  },[isAtuhenticated,navigate])
+ 
   const [formData, setFormData] = useState({
     name: " ",
     email: " ",
@@ -59,7 +62,9 @@ const SignupForm = () => {
   };
   return (
     <>
+   
    <ToastContainer theme="dark" />
+   <Navbar/>
    <div className="form-container bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600 p-8">
   <form className="form-box bg-white shadow-lg p-10 rounded-xl">
     <h2 className="form-title text-3xl font-bold text-gray-700 mb-6 text-center">Sign Up</h2>

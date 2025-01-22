@@ -7,6 +7,8 @@ import { useDispatch } from "react-redux";
 import { setToken, setUser } from "../../redux/auth/authSlice";
 import Loading from "../Loading/Loading";
 import { useSelector } from "react-redux";
+import './login.css'
+import Navbar from "../../componets/Navbar/Navbar";
 const Login = () => {
   const isAuthenticated = useSelector((state)=>state.auth.isAuthenticated)
   const navigate = useNavigate();
@@ -17,9 +19,12 @@ const Login = () => {
     password: "",
   });
 
+  useEffect(()=>{
     if(isAuthenticated){
       navigate('/')
     }
+  },[isAuthenticated,navigate])
+   
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -47,7 +52,7 @@ const Login = () => {
       if (response.data.success) {
         const { user, token } = response.data;
 
-        localStorage.setItem("token", token);
+        localStorage.setItem("userToken", token);
 
         dispatch(setToken(token));
 
@@ -71,7 +76,11 @@ const Login = () => {
     }
   };
   return (
+    <>
+      <Navbar/>
+    
     <div className="form-container">
+    
     {isLoading && <Loading />}
     <form className="form-box">
       <h2 className="form-title">Log In</h2>
@@ -108,6 +117,7 @@ const Login = () => {
       </p>
     </form>
   </div>
+  </>
   );
 };
 

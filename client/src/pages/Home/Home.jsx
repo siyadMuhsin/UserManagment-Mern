@@ -6,6 +6,7 @@ import "./Home.css";
 import { toast } from "react-toastify";
 import { setUser } from "../../redux/auth/authSlice";
 import Loading from "../../pages/Loading/Loading";
+import Navbar from "../../componets/Navbar/Navbar";
 const Home = () => {
   const [isLoading, setLoading] = useState(false);
 
@@ -26,12 +27,12 @@ const Home = () => {
       try {
         const response = await API.post(`/add-image/${user._id}`, formData, {
           headers: {
-            "Content-Type": "multipart/form-data", // Set content type for file upload
+            "Content-Type": "multipart/form-data", 
           },
         });
 
         if (response.data.success) {
-          console.log(response.data);
+         
           dispatch(setUser(response.data.user));
 
           toast.success(response.data.message);
@@ -52,6 +53,9 @@ const Home = () => {
   return isLoading ? (
     <Loading />
   ) : (
+    <>
+   
+    <Navbar/>
     <div className="min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center">
       <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-lg mx-4 mt-[70px]">
         <div className="text-center">
@@ -112,6 +116,7 @@ const Home = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

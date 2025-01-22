@@ -1,0 +1,31 @@
+.admin-dashboard {
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .top-bar {
+    background: linear-gradient(to right, #3b82f6, #1d4ed8); /* Gradient background */
+  }
+  
+  .hello-admin {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .users-list {
+    background: linear-gradient(to right, #f3f4f6, #e5e7eb); /* Gradient background */
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  table th, table td {
+    text-align: center;
+  }
+  
+  button {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  button:hover {
+    transform: scale(1.05);
+  }
+  
