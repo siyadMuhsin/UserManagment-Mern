@@ -12,15 +12,25 @@ import { useDispatch, useSelector } from "react-redux";
 import EditModal from "../../../componets/EditUserModal/EditModal";
 import { toast } from "react-toastify";
 import ConfirmationModal from "../../../Utils/ConfirmationModal/ConfirmationModal";
+import Navbar from "../../../componets/Navbar/Navbar";
+import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
+  const navigate= useNavigate()
   const users = useSelector((state) => state.users.users);
   const dispatch = useDispatch();
   const [selectedUser, setSelectedUser] = useState(null);
   const [isEditModal, setEditModal] = useState(false);
 const [isConfirm,setCorform]=useState(false)
+const [message,setMessage]=useState('')
+const [isLogOut,setIsLogOut]=useState(false)
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
+const athenticated= localStorage.getItem('adminToken')
+if(!athenticated){
+  navigate('/admin')
+}
+
     const fetchDatas = async () => {
       setLoading(true);
       const response = await API.get("/admin/users");
@@ -65,26 +75,6 @@ const [isConfirm,setCorform]=useState(false)
     }
   };
 
-  // const handleDelete = async (user) => {
-  //   setCorform(true)
-  //   const id = user._id;
-  //   try {
-  //     const responce = await API.delete("/admin/delete", {
-  //       data: { id },
-  //     });
-  //     if(responce.data.success){
-  //       dispatch(deletUser(id))
-  //       toast.success(responce.data.message)
-  //     }else{
-  //       toast.error(responce.data.message)
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //     toast.error(err.message)
-      
-  //   }
-  // };
-
 
 
   const handleDelete = async () => {
@@ -112,15 +102,32 @@ const [isConfirm,setCorform]=useState(false)
   };
 
   const handleOpenConfirm = (user) => {
+    setMessage('Are you sure want to delete this user')
     setSelectedUser(user); 
     setCorform(true); 
   };
 
   const handleCancel = () => {
-    setCorform(false); // Close the confirmation modal
-    setSelectedUser(null); // Clear the selected user
+    setCorform(false); 
+    setSelectedUser(null); 
   };
-  const handleLogout = () => {};
+
+  const logOuting=()=>{
+try {
+  dispatch(clearUsersState())
+} catch (error) {
+  console.log(error);
+  toast.error(error.message)
+  
+}finally{
+  setIsLogOut(false)
+}
+  }
+  const handleLogout = () => {
+    setCorform(true)
+    setMessage("Are you sure want logOut")
+    setIsLogOut(true)
+  };
   return (
     <div className="admin-dashboard">
       {isLoading && <Loading />}
@@ -213,8 +220,8 @@ const [isConfirm,setCorform]=useState(false)
       {isConfirm && (
           <ConfirmationModal
             isOpen={isConfirm}
-            message="Are you sure you want to delete the user?"
-            onConfirm={handleDelete}
+            message={message}
+            onConfirm={isLogOut?logOuting: handleDelete}
             onCancel={handleCancel}
           />
         )}

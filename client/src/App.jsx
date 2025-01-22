@@ -1,7 +1,5 @@
 import { useEffect, useState, lazy, Suspense } from "react";
-
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-
 const Home = lazy(() => import("./pages/Home/Home"));
 const Login = lazy(() => import("./pages/UserAuth/Login"));
 const SignupForm = lazy(() => import("./pages/UserAuth/Signup"));
@@ -12,7 +10,7 @@ import API from "./axiosConfig";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "./redux/auth/authSlice";
 import Loading from "./pages/Loading/Loading";
-import Navbar from "./componets/Navbar/Navbar";
+
 import "./App.css";
 
 function App() {

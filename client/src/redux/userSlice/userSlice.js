@@ -25,6 +25,7 @@ const userSlice= createSlice({
         },
         clearUsersState:(state,action)=>{
             state.users=[]
+            localStorage.removeItem('adminToken')
         }
     }
 })

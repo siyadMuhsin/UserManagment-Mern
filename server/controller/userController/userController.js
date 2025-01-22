@@ -43,6 +43,8 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   try {
+    console.log("user login ",req.body);
+    
     const { email, password } = req.body;
     if ((!email, !password)) {
       return res.json({
@@ -52,8 +54,12 @@ const login = async (req, res) => {
     }
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
+      
+      
       return res.json({ success: false, message: "User not found" });
     }
+    
+
     const comparePassword = await bcrypt.compare(
       password,
       existingUser.password
@@ -61,11 +67,15 @@ const login = async (req, res) => {
     if (!comparePassword) {
       return res.json({ success: false, message: "Password not match.." });
     }
+   
+
     const playload = {
       userId: existingUser._id,
       userName: existingUser.name,
       userEmail: existingUser.email,
     };
+
+    
     const token = await jwt.sign(playload, process.env.JWT_SECRET);
     return res
       .status(200)
