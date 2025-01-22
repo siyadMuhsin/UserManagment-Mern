@@ -124,6 +124,17 @@ const addImage = async (req, res) => {
       return res.json({ success: false, message: "No File uploaded" });
     }
 
+     const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+     if (!allowedTypes.includes(req.file.mimetype)) {
+       return res.json({ success: false, message: "Invalid file type. Only JPEG, PNG, and GIF are allowed." });
+     }
+ 
+     
+     const maxSize = 2 * 1024 * 1024; // 2MB
+     if (req.file.size > maxSize) {
+       return res.json({ success: false, message: "File size exceeds the 2MB limit." });
+     }
+
     const imagePath = `/uploads/${req.file.filename}`;
     const updatedUser = await User.findByIdAndUpdate(userId, {
       profile: imagePath,

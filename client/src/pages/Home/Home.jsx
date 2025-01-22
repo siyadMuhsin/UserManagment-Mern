@@ -9,35 +9,42 @@ import Loading from "../../pages/Loading/Loading";
 import Navbar from "../../componets/Navbar/Navbar";
 const Home = () => {
   const [isLoading, setLoading] = useState(false);
+console.log("home page");
 
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.auth.user);
 
+ 
   const handleImageChange = async (e) => {
     const selectedImage = e.target.files[0];
-   
-
     if (selectedImage) {
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+      if (!allowedTypes.includes(selectedImage.type)) {
+        toast.error("Invalid file type. Only JPEG, PNG, GIF, and WebP are allowed.");
+        return;
+      }
+    
+   
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      if (selectedImage.size > maxSize) {
+        toast.error("File size exceeds the 2MB limit.");
+        return;
+      }
       setLoading(true);
-
       const formData = new FormData();
       formData.append("image", selectedImage);
-
       try {
         const response = await API.post(`/add-image/${user._id}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data", 
           },
         });
-
-        if (response.data.success) {
-         
+        if (response.data.success) { 
           dispatch(setUser(response.data.user));
-
           toast.success(response.data.message);
         } else {
-          toast.error("Failed to upload image. Please try again.");
+          toast.error(response.data.message);
         }
       } catch (error) {
         console.error("Error uploading image:", error);

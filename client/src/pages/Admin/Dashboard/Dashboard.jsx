@@ -7,16 +7,18 @@ import {
   addUsersToState,
   clearUsersState,
   updateUserInState,
+  searchUsers,
 } from "../../../redux/userSlice/userSlice";
+import {logOutAdmin} from '../../../redux/auth/authSlice'
 import { useDispatch, useSelector } from "react-redux";
 import EditModal from "../../../componets/EditUserModal/EditModal";
 import { toast } from "react-toastify";
 import ConfirmationModal from "../../../Utils/ConfirmationModal/ConfirmationModal";
-import Navbar from "../../../componets/Navbar/Navbar";
+
 import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const navigate= useNavigate()
-  const users = useSelector((state) => state.users.users);
+  const users = useSelector((state) => state.users.filerterdUsers);
   const dispatch = useDispatch();
   const [selectedUser, setSelectedUser] = useState(null);
   const [isEditModal, setEditModal] = useState(false);
@@ -25,13 +27,16 @@ const [message,setMessage]=useState('')
 const [isLogOut,setIsLogOut]=useState(false)
   const [isLoading, setLoading] = useState(false);
 
+
   useEffect(() => {
-const athenticated= localStorage.getItem('adminToken')
-if(!athenticated){
-  navigate('/admin')
-}
+
 
     const fetchDatas = async () => {
+//       const athenticated= localStorage.getItem('adminToken')
+// if(!athenticated){
+//   navigate('/admin')
+//   return 
+// }
       setLoading(true);
       const response = await API.get("/admin/users");
       if (response.data.success) {
@@ -41,7 +46,7 @@ if(!athenticated){
       }
     };
     fetchDatas();
-  }, [dispatch]);
+  }, [dispatch,]);
 
   const handleEdit = (user) => {
     setSelectedUser(user);
@@ -115,6 +120,10 @@ if(!athenticated){
   const logOuting=()=>{
 try {
   dispatch(clearUsersState())
+  dispatch(logOutAdmin())
+  setCorform(false)
+
+  navigate('/admin')
 } catch (error) {
   console.log(error);
   toast.error(error.message)
@@ -136,11 +145,11 @@ try {
           <input
             type="text"
             placeholder="Search Users..."
+            
+            onChange={(e)=>dispatch(searchUsers(e.target.value))}
             className="px-4 py-2 rounded-md w-64 focus:ring-2 focus:ring-blue-500 text-black"
           />
-          <button className="bg-blue-700 px-4 py-2 rounded-md hover:bg-blue-800 focus:outline-none">
-            Search
-          </button>
+         
         </div>
         <div className="hello-admin flex items-center justify-center flex-1 text-center">
           <h3 className="text-2xl font-bold">Hello, Admin</h3>
